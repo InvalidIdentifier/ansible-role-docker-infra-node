@@ -1,0 +1,62 @@
+---
+# extend traefik_entrypoints with infra ports
+- name: extend traefik_entrypoints with infra ports
+  set_fact:
+    traefik_entrypoints: "{{ traefik_entrypoints | default({}) | combine(infra_entrypoints, recursive=True) }}"
+  when: infra_entrypoints | length > 0
+
+# create directory for bindmount folders
+- name: create directory bindmounts
+  file:
+    path: /data/bindmounts
+    state: directory
+    mode: '0755'
+
+# create directories for bindmount
+- name: create bindmount directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /data/bindmounts/blackbox
+    - /data/bindmounts/gotify2ntfy
+    - /data/bindmounts/loki
+    - /data/bindmounts/prometheus
+
+# copy blackbox config
+- name: copy config for blackbox
+  template:
+    src: blackbox.yml.j2
+    dest: /data/bindmounts/blackbox/blackbox.yml
+
+# copy gotify2ntfy config
+- name: copy config for gotify2ntfy
+  template:
+    src: topics.js.j2
+    dest: /data/bindmounts/gotify2ntfy/topics.js
+
+# copy loki config
+- name: copy config for loki
+  template:
+    src: local-config.yaml.j2
+    dest: /data/bindmounts/loki/local-config.yaml
+
+# copy prometheus config
+- name: copy config for prometheus
+  template:
+    src: prometheus.yml.j2
+    dest: /data/bindmounts/prometheus/prometheus.yml
+
+# copy docker-compose.yml
+- name: copy docker-compose.yml
+  template:
+    src: docker-compose-infra.yml.j2
+    dest: /home/user/docker-compose-infra.yml
+
+# run docker container
+- name: start containers
+  command: docker compose -f /home/user/docker-compose-infra.yml up -d --remove-orphans
+  when: 
+    - ansible_virtualization_type != "docker"
+...

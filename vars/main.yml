@@ -1,0 +1,34 @@
+trusted_ips_list:
+  - 127.0.0.1/32
+  - "{{ lookup('env', 'VLAN_INFRA') }}.100/32"
+traefik_entrypoints:
+  http:
+    port: 80
+    trusted_ips: "{{ trusted_ips_list }}"
+  https:
+    port: 443
+    trusted_ips: "{{ trusted_ips_list }}"
+  nodeexporter:
+    port: 9100
+  cadvisor:
+    port: 8080
+  prometheus:
+    port: 9090
+  loki:
+    port: 3100
+  smb137:
+    port: "137/udp"
+  smb138:
+    port: "138/udp"   
+  smb139:
+    port: 139
+  smb445:
+    port: 445
+traefik_ports:
+  - "8080:8080"
+  - "9090:9090"
+  - "3100:3100"
+  - "137:137/udp"
+  - "138:138/udp"
+  - "139:139"
+  - "445:445"

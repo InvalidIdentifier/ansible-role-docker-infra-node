@@ -1,0 +1,79 @@
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  # external_labels:
+  #  monitor: 'codelab-monitor'
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+
+   # Job for node_exporter_010
+  - job_name: 'node_exporter_010'
+    static_configs:
+      - targets: ['node010.{{ domain }}:9100']
+
+   # Job for node_exporter_100
+  - job_name: 'node_exporter_100'
+    static_configs:
+      - targets: ['node100.{{ domain }}:9100']
+
+   # Job for node_exporter_121
+  - job_name: 'node_exporter_121'
+    static_configs:
+      - targets: ['node121.{{ domain }}:9100']
+
+   # Job for node_exporter_122
+  - job_name: 'node_exporter_122'
+    static_configs:
+      - targets: ['node122.{{ domain }}:9100']
+
+  # Job for cadvisor_010
+  - job_name: 'cadvisor_010'
+    static_configs:
+      - targets: ['node010.{{ domain }}:8080']
+
+  # Job for cadvisor_100
+  - job_name: 'cadvisor_100'
+    static_configs:
+      - targets: ['node100.{{ domain }}:8080']
+
+  # Job for cadvisor_121
+  - job_name: 'cadvisor_121'
+    static_configs:
+      - targets: ['node121.{{ domain }}:8080']
+
+  # Job for cadvisor_122
+  - job_name: 'cadvisor_122'
+    static_configs:
+      - targets: ['node122.{{ domain }}:8080']
+
+  # Job for unpoller 
+  - job_name: 'unifipoller'
+    scrape_interval: 30s
+    static_configs:
+      - targets: ['unpoller:9130']
+
+  # # Job for blackbox
+  # - job_name: 'blackbox_exporter'
+  #   metrics_path: /probe
+  #   params:
+  #     module: [http_2xx]
+  #   static_configs:
+  #     - targets:
+  #       - https://traefik100.{{ domain }}
+  #   relabel_configs:
+  #     - source_labels: [__address__]
+  #       target_label: __param_target
+  #     - source_labels: [__param_target]
+  #       target_label: instance
+  #     - target_label: __address__
+  #       replacement: blackbox_exporter:9115
