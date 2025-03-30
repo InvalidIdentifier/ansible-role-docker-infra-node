@@ -1,12 +1,4 @@
 ---
-vlan_infra: "{{ lookup('env', 'VLAN_INFRA') }}"
-vlan_base: "{{ lookup('env', 'VLAN_BASE') }}"
 domain: "{{ lookup('env', 'DOMAIN') }}"
-domain_old: "{{ lookup('env', 'DOMAIN_OLD') }}"
 ntfy_token: "{{ lookup('env', 'NTFY_TOKEN') }}"
-bindmount_dir: "/data/bindmounts"
-domain: "{{ lookup('env', 'DOMAIN') }}"
-vlan_docker_name: "{{ lookup('env', 'VLAN_DOCKER_NAME') }}"
-vlan_docker_subnet: "{{ lookup('env', 'VLAN_DOCKER_SUBNET') }}"
-vlan_docker_gw: "{{ lookup('env', 'VLAN_DOCKER_GW') }}"
 infra_entrypoints: {}

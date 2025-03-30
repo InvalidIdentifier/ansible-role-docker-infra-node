@@ -233,11 +233,6 @@ services:
       - traefik.http.routers.notify-secure.tls=true
       - traefik.http.routers.notify-secure.service=notify
       - traefik.http.services.notify.loadbalancer.server.port=80
-      # smtp 
-      - traefik.tcp.routers.ntfysmtp.entrypoints=ntfysmtp
-      - "traefik.tcp.routers.ntfysmtp.rule=HostSNI(`*`)"
-      - "traefik.tcp.routers.ntfysmtp.service=ntfysmtp"
-      - traefik.tcp.services.ntfysmtp.loadbalancer.server.port=25
     # Watchtower
       - "com.centurylinklabs.watchtower.enable=true"
 
