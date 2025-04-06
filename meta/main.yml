@@ -10,10 +10,6 @@ galaxy_info:
   galaxy_tags: []
 
 dependencies:
-  - name: invalididentifier.docker_common_setup
-    src: https://github.com/InvalidIdentifier/ansible-role-docker-common-setup
-    scm: git
-
   - name: invalididentifier.docker_common_services
     src: https://github.com/InvalidIdentifier/ansible-role-docker-common-services
     scm: git
