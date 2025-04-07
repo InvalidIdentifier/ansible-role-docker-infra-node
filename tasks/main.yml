@@ -47,7 +47,7 @@
 - name: copy config for prometheus
   template:
     src: prometheus.yml.j2
-    dest: /data/bindmounts/prometheus/prometheus.yml
+    dest: /data/bindmounts/prometheus/config/prometheus.yml
 
 # copy docker-compose.yml
 - name: copy docker-compose.yml
