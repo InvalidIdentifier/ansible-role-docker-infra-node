@@ -23,6 +23,7 @@
     - /data/bindmounts/gotify2ntfy
     - /data/bindmounts/loki
     - /data/bindmounts/prometheus
+    - /data/bindmounts/prometheus/config
 
 # copy blackbox config
 - name: copy config for blackbox

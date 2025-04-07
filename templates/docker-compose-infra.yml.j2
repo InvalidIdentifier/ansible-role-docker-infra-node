@@ -36,8 +36,6 @@ services:
       - traefik.http.routers.monitoring-secure.tls=true
       - traefik.http.routers.monitoring-secure.service=monitoring
       - traefik.http.services.monitoring.loadbalancer.server.port=3000
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
   grafanaDbMonitoring:
     image: postgres:16
@@ -53,9 +51,6 @@ services:
       - "${DNS_SERVER}"
     network_mode: web
     restart: unless-stopped
-    labels:
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
   influxdbPve:
     image: "influxdb:latest"
@@ -89,8 +84,6 @@ services:
       - traefik.http.routers.influxpve-secure.tls=true
       - traefik.http.routers.influxpve-secure.service=influxpve
       - traefik.http.services.influxpve.loadbalancer.server.port=8086
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
   prometheus:
     image: prom/prometheus:latest
@@ -122,8 +115,6 @@ services:
       - 'traefik.http.routers.prometheus-secure.rule=Host(`prometheus.${DOMAIN}`)'
       - traefik.http.routers.prometheus-secure.tls=true
       - traefik.http.routers.prometheus-secure.service=prometheus
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
   loki:
     image: grafana/loki:latest
@@ -147,8 +138,6 @@ services:
       - "traefik.tcp.routers.loki.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.loki.service=loki"
       - traefik.tcp.services.loki.loadbalancer.server.port=3100
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
   unpoller:
     image: ghcr.io/unpoller/unpoller:latest
@@ -172,9 +161,6 @@ services:
       - UP_UNIFI_CONTROLLER_0_URL=https://${DNS_SERVER}
       - UP_UNIFI_CONTROLLER_0_USER=${UP_UNIFI_CONTROLLER_0_USER}
     restart: unless-stopped
-    labels:
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
   blackbox_exporter:
     image: prom/blackbox-exporter:master
@@ -185,9 +171,6 @@ services:
       - "${DNS_SERVER}"
     network_mode: web
     restart: unless-stopped
-    labels:
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
 ### Notifications ###
 
@@ -233,8 +216,6 @@ services:
       - traefik.http.routers.notify-secure.tls=true
       - traefik.http.routers.notify-secure.service=notify
       - traefik.http.services.notify.loadbalancer.server.port=80
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
   gotify2ntfy:
     image: 'levantinlynx/gotify-to-ntfy-proxy:latest'
@@ -252,9 +233,6 @@ services:
     dns:
       - "${DNS_SERVER}"
     restart: unless-stopped
-    labels:
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
   grafana2ntfy:
     image: saibe1111/grafana-to-ntfy
@@ -308,8 +286,6 @@ services:
       - traefik.udp.routers.smb138.entrypoints=smb138
       - "traefik.udp.routers.smb138.service=smb138"
       - traefik.udp.services.smb138.loadbalancer.server.port=138
-    # Watchtower
-      - "com.centurylinklabs.watchtower.enable=true"
 
 networks:
   web:
