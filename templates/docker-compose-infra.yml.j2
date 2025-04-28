@@ -361,7 +361,7 @@ services:
       - traefik.http.routers.idp-secure.rule=Host(`idp.${DOMAIN}`)
       - traefik.http.routers.idp-secure.tls=true
       - traefik.http.routers.idp-secure.service=idp
-      - traefik.http.services.idp.loadbalancer.server.port=9443
+      - traefik.http.services.idp.loadbalancer.server.port=9000
 
   authentikWorker:
     image: ghcr.io/goauthentik/server:2025.2.4
