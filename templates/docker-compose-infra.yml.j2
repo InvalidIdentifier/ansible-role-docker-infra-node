@@ -343,6 +343,8 @@ services:
       - '/data/bindmounts/authentik/media:/media'
       - '/data/bindmounts/authentik/custom-templates:/templates'
     network_mode: web
+    ports:
+      - '9000:9000'
     dns:
       - "${DNS_SERVER}"
     restart: unless-stopped
@@ -355,10 +357,9 @@ services:
     # Traefik
       - traefik.enable=true
       - traefik.http.routers.idp.entrypoints=http
-      - traefik.http.routers.idp.rule=Host(`idp.${DOMAIN}`)
-      - traefik.http.routers.idp.middlewares=traefik-https-redirect
+      - traefik.http.routers.idp.rule=Host(`idp.${DOMAIN}`) || HostRegexp(`{subdomain:[a-z0-9]+}.${DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)
       - traefik.http.routers.idp-secure.entrypoints=https
-      - traefik.http.routers.idp-secure.rule=Host(`idp.${DOMAIN}`)
+      - traefik.http.routers.idp-secure.rule=Host(`idp.${DOMAIN}`) || HostRegexp(`{subdomain:[a-z0-9]+}.${DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)
       - traefik.http.routers.idp-secure.tls=true
       - traefik.http.routers.idp-secure.service=idp
       - traefik.http.services.idp.loadbalancer.server.port=9000
